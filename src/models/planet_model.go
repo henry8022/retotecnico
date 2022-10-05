@@ -17,7 +17,7 @@ func (planetModel PlanetModel) FindAll() (Planet []entities.Planet, err error) {
 	} else {
 		var planets []entities.Planet
 		for rows.Next() {
-			var id int
+			var id int64
 			var clima string
 			var fecha_creacion string
 			var diametro string
@@ -73,7 +73,7 @@ func (planetModel PlanetModel) Find(id int) (entities.Planet, error) {
 	} else {
 		var planet entities.Planet
 		for rows.Next() {
-			var id int
+			var id int64
 			var clima string
 			var fecha_creacion string
 			var diametro string
@@ -128,7 +128,7 @@ func (planetModel PlanetModel) Create(planet *entities.Planet) error {
 	if err != nil {
 		return err
 	} else {
-		var newId int
+		var newId int64
 		row.Next()
 		row.Scan(&newId)
 		planet.Id = newId
@@ -139,7 +139,7 @@ func (planetModel PlanetModel) Create(planet *entities.Planet) error {
 
 //Actualizar datos
 func (planetModel PlanetModel) Update(planet *entities.Planet) (int64, error) {
-	result, err := planetModel.Db.Exec("update planet set clima = ?, fecha_creacion = ?, diametro = ?, fecha_edicion = ?, pelicula = ?, gravedad = ?, nombre = ?, periodo_orbital = ?, poblacion = ?, residentes = ?, periodo_de_rotacion = ?, agua_superficial = ?, terreno = ?, url = ?, where id = ?",
+	result, err := planetModel.Db.Exec("update planet set clima = ?, fecha_creacion = ?, diametro = ?, fecha_edicion = ?, pelicula = ?, gravedad = ?, nombre = ?, periodo_orbital = ?, poblacion = ?, residentes = ?, periodo_de_rotacion = ?, agua_superficial = ?, terreno = ?, url = ? where id = ?",
 		planet.Clima, planet.Fecha_creacion, planet.Diametro, planet.Fecha_edicion, planet.Pelicula, planet.Gravedad, planet.Nombre,
 		planet.Periodo_orbital, planet.Poblacion, planet.Residentes, planet.Periodo_de_rotacion, planet.Agua_superficial, planet.Terreno, planet.Url, planet.Id)
 	if err != nil {
